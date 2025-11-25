@@ -2,378 +2,226 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Vocab Flashcards – Dark Deck</title>
+  <title>Vocab Flashcards – Dark Mode</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- Optional Google Font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-main: #050711;
-      --bg-card: #0c1220;
-      --bg-card-alt: #0f172a;
+      --bg: #020617;
+      --bg-card: #020617;
+      --bg-card2: #0b1220;
       --accent: #22d3ee;
       --accent-soft: rgba(34, 211, 238, 0.15);
-      --accent-strong: rgba(34, 211, 238, 0.4);
-      --text-main: #e5f3ff;
-      --text-muted: #8b9bb5;
-      --danger: #fb7185;
-      --radius-xl: 1.3rem;
-      --shadow-card: 0 18px 40px rgba(0, 0, 0, 0.65);
-      --transition-fast: 0.22s ease-out;
-      --transition-med: 0.35s ease-in-out;
+      --text: #e5f3ff;
+      --muted: #94a3b8;
+      --radius: 1.2rem;
+      --shadow: 0 18px 40px rgba(0, 0, 0, 0.7);
     }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #1e293b 0, #020617 40%, #000 100%);
-      color: var(--text-main);
       min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #1e293b 0, #020617 40%, #000 100%);
+      color: var(--text);
       display: flex;
-      align-items: stretch;
+      align-items: center;
       justify-content: center;
-      padding: 32px 16px;
+      padding: 24px 12px;
     }
 
-    .page {
+    .wrapper {
       width: 100%;
       max-width: 1100px;
-      margin: auto;
-      border-radius: 1.75rem;
-      background: linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.96))
-        padding-box,
-        linear-gradient(135deg, rgba(34, 211, 238, 0.5), rgba(59, 130, 246, 0.5)) border-box;
-      border: 1px solid transparent;
-      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75);
-      padding: 24px 22px 28px;
+      padding: 24px 18px 26px;
+      border-radius: 1.7rem;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      background:
+        radial-gradient(circle at 0 0, rgba(34, 211, 238, 0.12), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(59, 130, 246, 0.18), transparent 60%),
+        linear-gradient(135deg, rgba(15, 23, 42, 0.96), rgba(15, 23, 42, 0.98));
+      box-shadow: 0 26px 60px rgba(0, 0, 0, 0.8);
       backdrop-filter: blur(18px);
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
     }
 
     header {
       display: flex;
       flex-wrap: wrap;
-      align-items: center;
+      gap: 10px;
+      align-items: baseline;
       justify-content: space-between;
-      gap: 16px;
-      border-bottom: 1px solid rgba(148, 163, 184, 0.25);
-      padding-bottom: 14px;
-    }
-
-    .title-block {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .logo-pill {
-      width: 42px;
-      height: 42px;
-      border-radius: 999px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(circle at 20% 0, var(--accent), #0ea5e9);
-      color: #020617;
-      font-weight: 800;
-      font-size: 1.15rem;
-      box-shadow: 0 0 35px rgba(34, 211, 238, 0.6);
+      margin-bottom: 18px;
+      border-bottom: 1px solid rgba(148, 163, 184, 0.3);
+      padding-bottom: 10px;
     }
 
     h1 {
-      font-size: 1.4rem;
-      font-weight: 700;
-      letter-spacing: 0.03em;
+      font-size: 1.35rem;
+      letter-spacing: 0.04em;
     }
 
     .subtitle {
-      font-size: 0.88rem;
-      color: var(--text-muted);
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 4px;
     }
 
-    .controls {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .search-wrapper {
-      position: relative;
-      flex: 1 1 210px;
-      max-width: 260px;
-    }
-
-    .search-wrapper input {
-      width: 100%;
-      background: rgba(15, 23, 42, 0.9);
-      border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      padding: 9px 34px 9px 34px;
-      color: var(--text-main);
-      font-size: 0.86rem;
-      outline: none;
-      transition: border var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast);
-    }
-
-    .search-wrapper input::placeholder {
-      color: rgba(148, 163, 184, 0.7);
-    }
-
-    .search-wrapper input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 1px var(--accent-strong);
-      background: rgba(15, 23, 42, 1);
-    }
-
-    .search-icon,
-    .clear-search {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 0.9rem;
-      color: rgba(148, 163, 184, 0.9);
-      pointer-events: none;
-    }
-
-    .search-icon {
-      left: 11px;
-    }
-
-    .clear-search {
-      right: 10px;
-      cursor: pointer;
-      pointer-events: auto;
-      display: none;
-    }
-
-    .clear-search.visible {
-      display: block;
-    }
-
-    .mode-toggle {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 7px 12px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.95);
-      border: 1px solid rgba(148, 163, 184, 0.4);
+    .hint {
       font-size: 0.8rem;
-      color: var(--text-muted);
-      cursor: pointer;
-      user-select: none;
-      transition: background var(--transition-fast), border var(--transition-fast), box-shadow var(--transition-fast);
+      color: var(--muted);
     }
 
-    .mode-toggle span.dot {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 10px rgba(34, 211, 238, 0.7);
-    }
-
-    .mode-toggle:hover {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 1px var(--accent-strong);
-    }
-
-    main {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .flash-stats {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-      font-size: 0.8rem;
-      color: var(--text-muted);
-    }
-
-    .flash-stats strong {
+    .hint strong {
       color: var(--accent);
       font-weight: 600;
     }
 
-    .hint {
-      opacity: 0.9;
-    }
-
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
       gap: 18px;
+      margin-top: 16px;
     }
 
     .card {
-      background: radial-gradient(circle at 0 0, rgba(34, 211, 238, 0.08), transparent 50%),
-        radial-gradient(circle at 100% 100%, rgba(96, 165, 250, 0.12), transparent 55%),
-        linear-gradient(145deg, var(--bg-card), var(--bg-card-alt));
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow-card);
       position: relative;
+      background: none;
+      border-radius: var(--radius);
       perspective: 1200px;
       cursor: pointer;
       min-height: 170px;
       transform-origin: center center;
-      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border var(--transition-fast);
-      border: 1px solid rgba(148, 163, 184, 0.45);
-      overflow: hidden;
+      transition: transform 0.18s ease-out;
+    }
+
+    .card:hover {
+      transform: translateY(-4px) scale(1.01);
     }
 
     .card-inner {
+      position: relative;
       width: 100%;
       height: 100%;
       transform-style: preserve-3d;
-      transition: transform var(--transition-med);
-      position: relative;
-    }
-
-    .card-face {
-      position: absolute;
-      inset: 0;
-      padding: 16px 16px 14px;
-      backface-visibility: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .card-back {
-      transform: rotateY(180deg);
-      background: radial-gradient(circle at 20% 0, rgba(34, 211, 238, 0.15), transparent 60%),
-        linear-gradient(145deg, #020617, #020617);
+      transition: transform 0.35s ease-in-out;
     }
 
     .card.flipped .card-inner {
       transform: rotateY(180deg);
     }
 
-    .card:hover {
-      transform: translateY(-4px) scale(1.01);
-      box-shadow: 0 24px 55px rgba(15, 23, 42, 0.9);
-      border-color: var(--accent);
+    .card-face {
+      position: absolute;
+      inset: 0;
+      border-radius: var(--radius);
+      padding: 16px 16px 14px;
+      backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(148, 163, 184, 0.55);
     }
 
-    .card-badge {
+    .card-front {
+      background:
+        radial-gradient(circle at 0 0, rgba(34, 211, 238, 0.15), transparent 55%),
+        linear-gradient(145deg, var(--bg-card), var(--bg-card2));
+    }
+
+    .card-back {
+      background:
+        radial-gradient(circle at 20% 0, rgba(34, 211, 238, 0.18), transparent 60%),
+        linear-gradient(145deg, #020617, #020617);
+      transform: rotateY(180deg);
+    }
+
+    .badge {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 4px 9px;
+      padding: 4px 10px;
       border-radius: 999px;
-      background-color: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.9);
       font-size: 0.72rem;
-      color: var(--text-muted);
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      max-width: fit-content;
+      color: var(--muted);
+      max-width: max-content;
     }
 
-    .card-badge span.index {
+    .badge span.index {
       width: 16px;
       height: 16px;
       border-radius: 999px;
       background: var(--accent);
       color: #020617;
+      font-size: 0.75rem;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.75rem;
       font-weight: 700;
     }
 
-    .card-word {
-      margin-top: 12px;
-      font-size: 1.15rem;
+    .word {
+      margin-top: 14px;
+      font-size: 1.18rem;
       font-weight: 700;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.05em;
       text-transform: lowercase;
     }
 
-    .card-pos {
+    .pos {
+      margin-top: 4px;
       font-size: 0.78rem;
       text-transform: uppercase;
-      letter-spacing: 0.11em;
-      color: var(--text-muted);
-      margin-top: 4px;
+      letter-spacing: 0.14em;
+      color: var(--muted);
     }
 
-    .card-footer {
-      margin-top: 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    .flip-label {
       font-size: 0.72rem;
-      color: var(--text-muted);
-    }
-
-    .flip-indicator {
+      color: var(--muted);
       display: inline-flex;
       align-items: center;
       gap: 5px;
       padding: 4px 8px;
       border-radius: 999px;
+      border: 1px dashed rgba(148, 163, 184, 0.8);
       background-color: rgba(15, 23, 42, 0.95);
-      border: 1px dashed rgba(148, 163, 184, 0.7);
     }
+    .flip-label span.icon { color: var(--accent); }
 
-    .flip-indicator span.icon {
-      font-size: 0.85rem;
-      color: var(--accent);
-    }
-
-    .difficulty-pill {
+    .difficulty {
+      font-size: 0.7rem;
       padding: 3px 7px;
       border-radius: 999px;
-      font-size: 0.7rem;
       border: 1px solid rgba(148, 163, 184, 0.7);
+      color: var(--muted);
     }
+    .difficulty.medium { color: #facc15; border-color: rgba(250, 204, 21, 0.9); }
+    .difficulty.hard { color: #fb7185; border-color: rgba(248, 113, 113, 0.9); }
 
-    .difficulty-pill.medium {
-      border-color: rgba(250, 204, 21, 0.8);
-      color: #facc15;
-    }
-
-    .difficulty-pill.hard {
-      border-color: rgba(248, 113, 113, 0.9);
-      color: #f97373;
+    .bottom-row {
+      margin-top: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
     .definition {
-      font-size: 0.87rem;
+      font-size: 0.88rem;
       line-height: 1.4;
       color: #e2e8f0;
     }
 
-    .definition strong {
-      color: var(--accent);
-    }
+    .definition strong { color: var(--accent); }
 
     .example {
       font-size: 0.78rem;
-      color: var(--text-muted);
+      color: var(--muted);
       margin-top: 10px;
       padding-left: 10px;
       border-left: 2px solid var(--accent-soft);
-    }
-
-    .example em {
-      color: #cbd5f5;
-      font-style: normal;
     }
 
     .tag {
@@ -382,88 +230,33 @@
       background-color: var(--accent-soft);
       padding: 3px 8px;
       border-radius: 999px;
-      align-self: flex-start;
     }
 
-    .no-results {
-      text-align: center;
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      padding: 40px 10px 20px;
-    }
-
-    .no-results span {
-      display: block;
-      margin-top: 6px;
-      font-size: 0.8rem;
-    }
-
-    @media (max-width: 768px) {
-      .page {
-        border-radius: 1.3rem;
-        padding: 18px 14px 20px;
-      }
-
-      h1 {
-        font-size: 1.2rem;
-      }
-
-      .grid {
-        gap: 14px;
-      }
-
-      .card {
-        min-height: 160px;
-      }
+    @media (max-width: 720px) {
+      .wrapper { padding: 18px 12px 20px; border-radius: 1.4rem; }
+      h1 { font-size: 1.15rem; }
+      .grid { gap: 14px; }
+      .card { min-height: 160px; }
     }
   </style>
 </head>
 <body>
-  <div class="page">
+  <div class="wrapper">
     <header>
-      <div class="title-block">
-        <div class="logo-pill">V</div>
-        <div>
-          <h1>Dark Deck · Vocab Flashcards</h1>
-          <p class="subtitle">Tap a card to flip it · Tap again to go back.</p>
-        </div>
+      <div>
+        <h1>Dark Flashcards · Vocabulary Set</h1>
+        <p class="subtitle">Click or tap a card to flip it and see the definition.</p>
       </div>
-      <div class="controls">
-        <div class="search-wrapper">
-          <span class="search-icon">🔍</span>
-          <input id="search" type="text" placeholder="Search a word or meaning..." />
-          <span id="clearSearch" class="clear-search">✕</span>
-        </div>
-        <div id="modeToggle" class="mode-toggle">
-          <span class="dot"></span>
-          <span>Study: <strong>All cards</strong></span>
-        </div>
-      </div>
+      <p class="hint">Tip: Use <strong>Tab</strong> then <strong>Enter</strong> to flip with the keyboard.</p>
     </header>
 
-    <main>
-      <section class="flash-stats">
-        <div id="countInfo">
-          <strong>10</strong> cards · click to reveal definitions & examples
-        </div>
-        <div class="hint">
-          Pro tip: Press <strong>Tab</strong> and <strong>Enter</strong> to flip with keyboard.
-        </div>
-      </section>
-
-      <section id="cardsGrid" class="grid">
-        <!-- Cards will be injected here -->
-      </section>
-
-      <div id="noResults" class="no-results" style="display:none;">
-        No cards match that search.
-        <span>Try searching part of the definition instead of the whole sentence.</span>
-      </div>
-    </main>
+    <section class="grid" id="cardsGrid">
+      <!-- cards injected by JS -->
+    </section>
   </div>
 
   <script>
-    const cardsData = [
+    const data = [
       {
         word: "abstain",
         pos: "verb",
@@ -547,21 +340,11 @@
     ];
 
     const grid = document.getElementById("cardsGrid");
-    const searchInput = document.getElementById("search");
-    const clearSearch = document.getElementById("clearSearch");
-    const noResults = document.getElementById("noResults");
-    const countInfo = document.getElementById("countInfo");
-    const modeToggle = document.getElementById("modeToggle");
 
-    let showOnlyHard = false;
-
-    function createCard(card, index) {
+    function makeCard(card, i) {
       const wrapper = document.createElement("article");
       wrapper.className = "card";
       wrapper.tabIndex = 0;
-      wrapper.dataset.word = card.word.toLowerCase();
-      wrapper.dataset.definition = card.definition.replace(/<[^>]+>/g, "").toLowerCase();
-      wrapper.dataset.difficulty = card.difficulty;
 
       const inner = document.createElement("div");
       inner.className = "card-inner";
@@ -570,21 +353,19 @@
       front.className = "card-face card-front";
       front.innerHTML = `
         <div>
-          <div class="card-badge">
-            <span class="index">${String.fromCharCode(97 + index)}.</span>
-            <span>Word ${index + 1}</span>
+          <div class="badge">
+            <span class="index">${String.fromCharCode(97 + i)}.</span>
+            <span>Word ${i + 1}</span>
           </div>
-          <div class="card-word">${card.word}</div>
-          <div class="card-pos">${card.pos}</div>
+          <div class="word">${card.word}</div>
+          <div class="pos">${card.pos}</div>
         </div>
-        <div class="card-footer">
-          <div class="flip-indicator">
+        <div class="bottom-row">
+          <div class="flip-label">
             <span class="icon">⮂</span>
-            <span>flip for meaning</span>
+            <span>flip for definition</span>
           </div>
-          <span class="difficulty-pill ${card.difficulty === "hard" ? "hard" : card.difficulty === "medium" ? "medium" : ""}">
-            ${card.difficulty}
-          </span>
+          <span class="difficulty ${card.difficulty}">${card.difficulty}</span>
         </div>
       `;
 
@@ -592,18 +373,16 @@
       back.className = "card-face card-back";
       back.innerHTML = `
         <div>
-          <div class="card-badge">
-            <span class="index">${String.fromCharCode(97 + index)}.</span>
+          <div class="badge">
+            <span class="index">${String.fromCharCode(97 + i)}.</span>
             <span>${card.word}</span>
           </div>
           <p class="definition">${card.definition}</p>
           <p class="example">${card.example}</p>
         </div>
-        <div class="card-footer">
+        <div class="bottom-row">
           <span class="tag">${card.tag}</span>
-          <span class="difficulty-pill ${card.difficulty === "hard" ? "hard" : card.difficulty === "medium" ? "medium" : ""}">
-            ${card.difficulty}
-          </span>
+          <span class="difficulty ${card.difficulty}">${card.difficulty}</span>
         </div>
       `;
 
@@ -618,66 +397,14 @@
       wrapper.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
-          wrapper.click();
+          wrapper.classList.toggle("flipped");
         }
       });
 
       return wrapper;
     }
 
-    function renderCards() {
-      grid.innerHTML = "";
-      const filtered = filterCards(cardsData, searchInput.value.trim().toLowerCase(), showOnlyHard);
-
-      if (filtered.length === 0) {
-        noResults.style.display = "block";
-        countInfo.innerHTML = `<strong>0</strong> cards match your search.`;
-        return;
-      }
-
-      noResults.style.display = "none";
-
-      filtered.forEach((card, index) => {
-        grid.appendChild(createCard(card, index));
-      });
-
-      const label = showOnlyHard ? "hard" : "all";
-      countInfo.innerHTML = `<strong>${filtered.length}</strong> cards · studying <strong>${label}</strong> vocabulary`;
-    }
-
-    function filterCards(cards, query, onlyHard) {
-      return cards.filter((card) => {
-        if (onlyHard && card.difficulty !== "hard") return false;
-
-        if (!query) return true;
-
-        const word = card.word.toLowerCase();
-        const def = card.definition.replace(/<[^>]+>/g, "").toLowerCase();
-        const ex = card.example.replace(/<[^>]+>/g, "").toLowerCase();
-        return word.includes(query) || def.includes(query) || ex.includes(query);
-      });
-    }
-
-    searchInput.addEventListener("input", () => {
-      clearSearch.classList.toggle("visible", searchInput.value.length > 0);
-      renderCards();
-    });
-
-    clearSearch.addEventListener("click", () => {
-      searchInput.value = "";
-      clearSearch.classList.remove("visible");
-      searchInput.focus();
-      renderCards();
-    });
-
-    modeToggle.addEventListener("click", () => {
-      showOnlyHard = !showOnlyHard;
-      modeToggle.querySelector("span:nth-child(2)").innerHTML =
-        showOnlyHard ? 'Study: <strong>Hard only</strong>' : 'Study: <strong>All cards</strong>';
-      renderCards();
-    });
-
-    renderCards();
+    data.forEach((card, i) => grid.appendChild(makeCard(card, i)));
   </script>
 </body>
 </html>
