@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>JCN Live Feed</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    /* Reset-ish */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: #ffffff;
+    }
+
+    body {
+      overflow: hidden;
+    }
+
+    /* Fullscreen video background */
+    .video-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      z-index: -2;
+    }
+
+    .video-bg video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Dark overlay so text is readable */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at top, rgba(0,0,0,0.4), rgba(0,0,0,0.85));
+      z-index: -1;
+    }
+
+    /* Main content */
+    .page {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 1.5rem;
+      gap: 1.5rem;
+    }
+
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .title {
+      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-weight: 700;
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.7);
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      opacity: 0.85;
+    }
+
+    .badge {
+      padding: 0.3rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.4);
+      background: rgba(0,0,0,0.35);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+
+    /* Card that holds the feed */
+    .card {
+      flex: 1;
+      border-radius: 1.25rem;
+      border: 1px solid rgba(255,255,255,0.3);
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-header {
+      padding: 0.9rem 1.2rem;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .card-header h2 {
+      font-size: 1.1rem;
+    }
+
+    .card-header span {
+      font-size: 0.8rem;
+      opacity: 0.85;
+    }
+
+    /* The iframe with the official live feed */
+    .feed-frame {
+      flex: 1;
+      border: 0;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+    }
+
+    /* Footer / credit */
+    footer {
+      font-size: 0.75rem;
+      opacity: 0.8;
+    }
+
+    footer a {
+      color: #a5e6ff;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        overflow: auto;
+      }
+      .page {
+        padding: 1rem;
+      }
+      .card {
+        min-height: 70vh;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Background video -->
+  <div class="video-bg">
+    <video autoplay muted loop playsinline>
+      <!-- Put your school video file in the repo with this name,
+           or change the src to match your file name / path -->
+      <source src="school-video.mp4" type="video/mp4" />
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <!-- Dark overlay for readability -->
+  <div class="overlay"></div>
+
+  <!-- Foreground content -->
+  <div class="page">
+    <header>
+      <div>
+        <div class="title">JCN Live Feed Mirror</div>
+        <div class="subtitle">
+          Live news from the official
+          <strong>Jefferson County North USD 339</strong> website.
+        </div>
+      </div>
+      <div class="badge">Auto-updates from usd339.net</div>
+    </header>
+
+    <main class="card">
+      <div class="card-header">
+        <h2>USD 339 Live Feed</h2>
+        <span>Content, images, names & times are loaded directly from usd339.net</span>
+      </div>
+
+      <!-- IFRAME: this is what keeps everything in sync with the school site -->
+      <iframe
+        class="feed-frame"
+        src="https://www.usd339.net/live-feed"
+        title="USD 339 Live Feed"
+      ></iframe>
+    </main>
+
+    <footer>
+      This site simply embeds the official JCN live feed.
+      All news, pictures, names, timestamps, and posts belong to
+      <a href="https://www.usd339.net" target="_blank" rel="noopener noreferrer">
+        Jefferson County North USD 339
+      </a>.
+    </footer>
+  </div>
+</body>
+</html>
